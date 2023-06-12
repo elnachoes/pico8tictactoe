@@ -31,6 +31,7 @@ function _draw()
 		print("mouse click left to reset")
 	end
 
+	-- draw the gameboard
 	draw_board()
 	
 	-- draw the mouse cursor
@@ -79,6 +80,7 @@ end
 function check_if_gameover()
 	board = gamestate.board
 	
+	-- check for verticals and horizontals
 	for i = 1,3 do
 		if board[1][i] == board[2][i] and board[1][i] == board[3][i] and board[3][i] != 0 or 
 			board[i][1] == board[i][2] and board[i][1] == board[i][3] and board[i][3] != 0 then
@@ -86,19 +88,23 @@ function check_if_gameover()
 		end
 	end
 
+	-- check for diagonals
 	if board[1][1] == board[2][2] and board[1][1] == board[3][3] and board[3][3] != 0 or 
 		board[1][3] == board[2][2] and board[3][1] == board[1][3] and board[1][3] != 0 then
 		gamestate.gameover = true
 	end
 
-	for i = 1,3 do
-		for j = 1,3 do
-			if gamestate.board[i][j] == 0 then
-				
+	-- check for a tie the game should be over if no spaces are zero
+	if not gamestate.gameover then
+		gamestate.gameover = true
+		for i = 1,3 do
+			for j = 1,3 do
+				if gamestate.board[i][j] == 0 then
+					gamestate.gameover = false
+				end
 			end
 		end
 	end
-
 end
 
 function reset_game()
@@ -110,10 +116,8 @@ function reset_game()
 		}, 
 		playerturn = 1,
 		gameover = false,
-		winner = 0,
 	}
 end
-
 __gfx__
 88888888888888888888888801000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 80000008870000788000000817100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
